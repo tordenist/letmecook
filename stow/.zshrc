@@ -133,20 +133,8 @@ alias v=nvim
 # Zoxide
 alias z=zoxide
 
-# Pre-commit stuff
-alias pcr=pre-commit run -a
-
-# Chronicle CLI
-alias chronicle=chronicle_cli
-
 # Sneaky cat to bat
 alias cat=bat
-
-# Reload shell
-alias reloadz=source ~/.zshrc
-
-# Ankor CLI
-source $(brew --prefix)/share/ankor/ankor.zsh
 
 # Starship
 eval "$(starship init zsh)"
