@@ -1,0 +1,21 @@
+# aesthetics
+font-family = Mononoki Nerd Font
+font-size = 15
+theme = tokyonight_night
+background-opacity = 0.65 
+cursor-style = block
+cursor-style-blink = false
+adjust-cell-height = 30%
+
+# usability
+mouse-hide-while-typing = true
+mouse-scroll-multiplier = 2
+link = true
+link-url = true
+
+# window behaviour
+window-padding-balance = true
+window-save-state = always
+window-colorspace = display-p3
+
+
