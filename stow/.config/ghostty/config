@@ -10,7 +10,6 @@ adjust-cell-height = 30%
 # usability
 mouse-hide-while-typing = true
 mouse-scroll-multiplier = 2
-link = true
 link-url = true
 
 # window behaviour
