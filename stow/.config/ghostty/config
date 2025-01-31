@@ -2,7 +2,7 @@
 font-family = Mononoki Nerd Font
 font-size = 15
 theme = tokyonight_night
-background-opacity = 0.65 
+background-opacity = 0.85 
 cursor-style = block
 cursor-style-blink = false
 adjust-cell-height = 30%
@@ -16,5 +16,3 @@ link-url = true
 window-padding-balance = true
 window-save-state = always
 window-colorspace = display-p3
-
-
