@@ -1,8 +1,13 @@
 # aesthetics
 font-family = Mononoki Nerd Font
+font-family-bold = Mononoki Nerd Font Bold
+font-family-italic = Mononoki Nerd Font Italic
+font-family-bold-italic = Mononoki Nerd Font Bold Italic
+font-thicken = true
+font-thicken-strength = 75
 font-size = 15
-theme = tokyonight_night
-background-opacity = 0.85 
+theme = carbonfox
+background-opacity = 0.90 
 cursor-style = block
 cursor-style-blink = false
 adjust-cell-height = 30%
