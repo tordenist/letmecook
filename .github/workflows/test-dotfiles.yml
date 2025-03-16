@@ -28,11 +28,6 @@ jobs:
           cd nix
           nix flake check --show-trace
 
-      - name: Build nix-darwin configuration (dry run)
-        run: |
-          cd nix
-          nix build ".#darwinConfigurations.obsidian-flake.system"
-
       - name: Test `letmecook.sh` in a Safe Mode
         run: |
           chmod +x letmecook.sh

@@ -48,6 +48,12 @@ if [ ! -f "flake.nix" ]; then
     exit 1
 fi
 
+# Ensure Nix does not fail due to existing configuration
+if [ -f /etc/nix/nix.conf ]; then
+    echo "[INFO] Backing up existing /etc/nix/nix.conf to /etc/nix/nix.conf.before-nix-darwin"
+    sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin
+fi
+
 # Install nix-darwin configuration
 echo_status "Applying Nix-Darwin configuration..."
 nix run nix-darwin -- switch --flake "$DOTFILES_DIR/nix#obsidian-flake"
