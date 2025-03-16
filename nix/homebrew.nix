@@ -12,7 +12,7 @@
     ];
     casks = [
       "amethyst" "font-hack-nerd-font" "font-mononoki-nerd-font" "ghostty" 
-      "google-chrome" "kitty" "postman" "spotify" "stats" "zen-browser"
+      "google-chrome" "google-cloud-sdk" "kitty" "postman" "spotify" "stats" "zen-browser"
     ];
     taps = [ "caffix/amass" "fluxcd/tap" "homebrew/bundle" "jesseduffield/lazygit" ];
   };
