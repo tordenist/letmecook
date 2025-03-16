@@ -5,7 +5,6 @@ set -o pipefail  # Catch errors in piped commands
 
 # Define paths
 DOTFILES_DIR="$HOME/grimorium/letmecook"
-NIX_DIR="$DOTFILES_DIR/nix"
 REPO_SSH="git@github.com:tordenist/letmecook.git"
 REPO_HTTPS="https://github.com/tordenist/letmecook.git"
 
@@ -34,12 +33,12 @@ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 # Clone the dotfiles repository
 echo_status "Cloning dotfiles repository..."
 if [ ! -d "$DOTFILES_DIR" ]; then
-    # Try cloning via SSH first
-    if ssh -q git@github.com exit; then
+    # Check if SSH authentication is working
+    if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
         git clone "$REPO_SSH" "$DOTFILES_DIR"
     else
         echo_status "SSH authentication failed. Falling back to HTTPS..."
-        read -sp "Enter your GitHub token: " GITHUB_TOKEN
+        read -sp "Enter your GitHub Personal Access Token: " GITHUB_TOKEN
         echo ""
         git clone "https://$GITHUB_TOKEN@github.com/tordenist/letmecook.git" "$DOTFILES_DIR"
     fi
@@ -48,15 +47,15 @@ else
 fi
 
 # Ensure we are in the correct directory for Nix-Darwin
-cd "$NIX_DIR"
+cd "$DOTFILES_DIR/nix"
 if [ ! -f "flake.nix" ]; then
-    echo -e "${YELLOW}[WARNING]${NC} flake.nix not found in $NIX_DIR. Aborting Nix-Darwin setup."
+    echo -e "${YELLOW}[WARNING]${NC} flake.nix not found in $DOTFILES_DIR/nix. Aborting Nix-Darwin setup."
     exit 1
 fi
 
 # Install nix-darwin configuration
 echo_status "Applying Nix-Darwin configuration..."
-nix run nix-darwin -- switch --flake "$NIX_DIR#obsidian-flake"
+nix run nix-darwin -- switch --flake "$DOTFILES_DIR/nix#obsidian-flake"
 
 # Apply dotfiles with Stow
 echo_status "Applying dotfiles with Stow..."
