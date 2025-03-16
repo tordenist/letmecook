@@ -1,0 +1,24 @@
+# Global mise Configuration (~/.config/mise/mise.toml)
+
+[tools]
+
+# Programming Languages
+python     = "latest"
+ruby       = "latest"
+go         = "latest"
+zig        = "latest"
+rust       = "latest"
+nim        = "latest"
+bash       = "latest"
+c          = "latest"  # Uses system GCC or Clang
+
+# Infrastructure & Cloud Tools
+terraform  = "latest"
+packer     = "latest"
+docker     = "latest"
+kubectl    = "latest"
+helm       = "latest"
+istioctl   = "latest"
+tflint     = "latest"
+flux       = "latest"
+awscli     = "latest"

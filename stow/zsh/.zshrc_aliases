@@ -1,0 +1,25 @@
+# ls Enhancements
+alias ls="eza --icons --group-directories-first"
+alias ll="eza -l --icons --group-directories-first"
+alias la="eza -la --icons --group-directories-first"
+alias l="eza"
+
+# Navigation Shortcuts
+alias ..="cd .."
+alias ...="cd ../.."
+
+# Useful Defaults
+alias grep="grep --color=auto"
+alias mkdir="mkdir -pv"
+alias cp="cp -i"
+alias mv="mv -i"
+alias rm="rm -i"
+
+# Neovim Aliases
+alias vim=nvim
+alias v=nvim
+
+# Tools
+alias z=zoxide
+alias cat=bat
+alias powershell="/usr/local/microsoft/powershell/7/pwsh"
