@@ -3,6 +3,9 @@
   services.nix-daemon.enable = true;
   nix.package = pkgs.nix;
 
+  # Set system hostname
+  networking.hostName = "obsidian-flake";
+
   # Set macOS system preferences
   system.defaults.NSGlobalDomain.AppleShowAllExtensions = true; # Show file extensions
   system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false; # Disable press-and-hold for key repeats
