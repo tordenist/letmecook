@@ -3,19 +3,17 @@
     enable = true;
     onActivation.cleanup = "zap"; # Fully remove unused packages
     brews = [
-      "stow" "fzf" "tmux" "mise" "jq" "yq" "bat" "fzf" "ripgrep"
-      "shellcheck" "starship" "act" "procs" "btop" "eza" "tldr"
-      "mtr" "httpie" "masscan" "libpcap" "scorecard" "neovim"
-      "git" "gh" "pre-commit" "stow" "lazygit" "lefthook" "google-cloud-sdk"
-      "amass" "dnstwist" "feroxbuster" "john-jumbo" "nmap" "sqlmap" "theharvester"
-      "glow" "neofetch" "ruff" "sops" "tree" "zoxide" "hey" "stats"
+      "act" "amass" "bat" "btop" "dnstwist" "eza" "feroxbuster" "fzf" 
+      "gh" "git" "glow" "hey" "httpie" "john-jumbo" "jq" "lazygit" 
+      "lefthook" "libpcap" "masscan" "mise" "mtr" "neofetch" "neovim" 
+      "nmap" "pre-commit" "procs" "ripgrep" "ruff" "scorecard" "shellcheck" 
+      "sops" "starship" "stow" "theharvester" "tldr" "tmux" "tree" "yq" 
+      "zoxide"
     ];
     casks = [
-      "kitty" "spotify" "google-chrome" "postman" "ghostty"
-      "amethyst" "font-hack-nerd-font" "font-mononoki-nerd-font"
+      "amethyst" "font-hack-nerd-font" "font-mononoki-nerd-font" "ghostty" 
+      "google-chrome" "kitty" "postman" "spotify" "stats" "zen-browser"
     ];
-    taps = [ "homebrew/cask-fonts" "caffix/amass" "fluxcd/tap" "homebrew/bundle"
-      "homebrew/cask-versions" "jesseduffield/lazygit"
-    ];
+    taps = [ "caffix/amass" "fluxcd/tap" "homebrew/bundle" "jesseduffield/lazygit" ];
   };
 }
