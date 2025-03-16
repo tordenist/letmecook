@@ -34,6 +34,9 @@
   # Use Zsh as the default shell
   programs.zsh.enable = true;
 
+  # Ensure compatibility with macOS Sequoia and future updates
+  ids.uids.nixbld = 351;
+
   # State version
   system.stateVersion = 4;
 }
