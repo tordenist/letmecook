@@ -19,15 +19,22 @@ jobs:
           sh <(curl -L https://nixos.org/nix/install) --daemon
           mkdir -p ~/.config/nix  # Ensure the directory exists
           echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+          source ~/.nix-profile/etc/profile.d/nix.sh  # Load Nix immediately
 
       - name: Verify Nix Installation
-        run: nix --version
+        run: |
+          source ~/.nix-profile/etc/profile.d/nix.sh
+          nix --version
 
       - name: Check Flake Configuration
-        run: nix flake check --show-trace
+        run: |
+          source ~/.nix-profile/etc/profile.d/nix.sh
+          nix flake check --show-trace
 
       - name: Build nix-darwin configuration (dry run)
-        run: nix build ".#darwinConfigurations.obsidian-flake.system"
+        run: |
+          source ~/.nix-profile/etc/profile.d/nix.sh
+          nix build ".#darwinConfigurations.obsidian-flake.system"
 
       - name: Lint `letmecook.sh` script
         run: shellcheck letmecook.sh
