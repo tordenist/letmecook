@@ -24,10 +24,14 @@ jobs:
         run: nix --version
 
       - name: Check Flake Configuration
-        run: nix flake check --show-trace
+        run: |
+          cd nix
+          nix flake check --show-trace
 
       - name: Build nix-darwin configuration (dry run)
-        run: nix build ".#darwinConfigurations.obsidian-flake.system"
+        run: |
+          cd nix
+          nix build ".#darwinConfigurations.obsidian-flake.system"
 
       - name: Lint `letmecook.sh` script
         run: shellcheck letmecook.sh
