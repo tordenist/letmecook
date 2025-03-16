@@ -1,91 +1,110 @@
+### Package Management & Taps
+
+brew "mise"
+
 tap "caffix/amass"
 tap "fluxcd/tap"
 tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 tap "jesseduffield/lazygit"
-brew "act"
-brew "zstd"
-brew "libtiff"
-brew "little-cms2"
-brew "webp"
-brew "aom"
-brew "pycparser"
-brew "awscli"
-brew "libssh2"
-brew "bat"
-brew "libavif"
-brew "gd"
-brew "php"
-brew "composer"
-brew "kubernetes-cli"
-brew "dnstwist"
-brew "feroxbuster"
-brew "fzf"
+
+### Development Tools & Programming Languages
+
 brew "gcc"
-brew "gdk-pixbuf"
+brew "llvm"
+brew "make"
+
+### Version Control & Git Utilities
+
+brew "lefthook"
 brew "gh"
 brew "git"
-brew "gitleaks"
+brew "pre-commit"
+brew "stow"
+brew "lazygit"
+
+### Kubernetes & Cloud Tools
+
+brew "google-cloud-sdk"
+
+### Security & Pentesting Tools
+
+brew "amass"
+brew "dnstwist"
+brew "feroxbuster"
+brew "john-jumbo"
+brew "nmap"
+brew "sqlmap"
+brew "theharvester"
+
+### CLI Utilities & Enhancements
+
+brew "procs"
+brew "btop"
+brew "eza"
+brew "tldr"
+brew "jq"
+brew "yq"
+brew "bat"
+brew "fzf"
+brew "ripgrep"
+brew "shellcheck"
+brew "starship"
+brew "act"
+brew "tmux"
 brew "glow"
-brew "go"
-brew "netpbm"
+brew "neofetch"
+brew "ruff"
+brew "sops"
+brew "tree"
+brew "zoxide"
+
+### System Utilities
+
+brew "hey"
+brew "stats"
+
+### Text Editors & IDEs
+
+brew "neovim"
+cask "ghostty"
+cask "kitty"
+
+### Image & Graphics Processing
+
+brew "aom"
+brew "gd"
+brew "gdk-pixbuf"
+brew "graphviz"
 brew "gts"
 brew "harfbuzz"
+brew "libavif"
 brew "librsvg"
-brew "graphviz"
-brew "helm"
-brew "hey"
-brew "istioctl"
-brew "openssl@1.1"
-brew "john-jumbo"
-brew "jq"
-brew "jsonnet", link: false
-brew "jsonnet-bundler"
-brew "libpcap"
-brew "llvm"
-brew "lychee"
-brew "make"
-brew "neofetch"
-brew "neovim"
-brew "nim"
-brew "nmap"
-brew "node"
-brew "virtualenv"
-brew "pre-commit"
-brew "pyenv"
-brew "pyenv-virtualenv"
-brew "python@3.10"
-brew "ripgrep"
-brew "ruff"
-brew "rustup-init"
-brew "scorecard"
-brew "shellcheck"
-brew "snyk-cli"
-brew "sops"
-brew "sqlmap"
-brew "starship"
-brew "stow"
-brew "tanka"
-brew "terraform"
-brew "terraform-docs"
-brew "tflint"
-brew "tfsec"
-brew "theharvester"
-brew "tmux"
-brew "tree"
-brew "wget"
-brew "yq"
-brew "zoxide"
-brew "caffix/amass/amass"
-brew "fluxcd/tap/flux"
-brew "jesseduffield/lazygit/lazygit"
+brew "libtiff"
+brew "little-cms2"
+brew "netpbm"
+brew "webp"
+brew "zstd"
+
+### Font & UI Customization
+
 cask "amethyst"
 cask "font-hack-nerd-font"
 cask "font-mononoki-nerd-font"
-cask "ghostty"
-cask "google-cloud-sdk"
-cask "kitty"
-cask "menumeters"
+
+### Networking & Debugging
+
+brew "mtr"
+brew "httpie"
+brew "masscan"
+brew "libpcap"
+
+### Miscellaneous DevOps Tools
+
+brew "scorecard"
+
+### Communication & Productivity
+
 cask "postman"
 cask "spotify"
