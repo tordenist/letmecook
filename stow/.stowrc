@@ -1,0 +1,5 @@
+--target=$HOME
+--dir=stow
+--verbose=2
+--restow
+--dotfiles
