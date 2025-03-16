@@ -5,8 +5,8 @@ set -o pipefail  # Catch errors in piped commands
 
 # Define paths
 DOTFILES_DIR="$HOME/grimorium/letmecook"
-REPO_SSH="git@github.com:YOUR_USERNAME/letmecook.git"
-REPO_HTTPS="https://github.com/YOUR_USERNAME/letmecook.git"
+REPO_SSH="git@github.com:tordenist/letmecook.git"
+REPO_HTTPS="https://github.com/tordenist/letmecook.git"
 
 # Colors for output
 GREEN='\033[0;32m'
@@ -25,7 +25,7 @@ xcode-select --install 2>/dev/null || echo_status "Xcode Command Line Tools alre
 # Install Nix & Enable Flakes
 echo_status "Installing Nix and enabling Flakes..."
 if ! command -v nix &> /dev/null; then
-    sh <(curl -L https://nixos.org/nix/install) --daemon
+    bash -c "$(curl -L https://nixos.org/nix/install) --daemon"
 fi
 mkdir -p ~/.config/nix
 echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
@@ -40,7 +40,7 @@ if [ ! -d "$DOTFILES_DIR" ]; then
         echo_status "SSH authentication failed. Falling back to HTTPS..."
         read -sp "Enter your GitHub token: " GITHUB_TOKEN
         echo ""
-        git clone "https://$GITHUB_TOKEN@github.com/YOUR_USERNAME/letmecook.git" "$DOTFILES_DIR"
+        git clone "https://\$GITHUB_TOKEN@github.com/tordenist/letmecook.git" "$DOTFILES_DIR"
     fi
 else
     echo_status "Repository already exists. Skipping clone."
