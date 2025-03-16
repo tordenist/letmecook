@@ -5,8 +5,7 @@ set -o pipefail  # Catch errors in piped commands
 
 # Define paths
 DOTFILES_DIR="$HOME/grimorium/letmecook"
-REPO_SSH="git@github.com:tordenist/letmecook.git"
-REPO_HTTPS="https://github.com/tordenist/letmecook.git"
+REPO_URL="https://github.com/tordenist/letmecook.git"
 
 # Colors for output
 GREEN='\033[0;32m'
@@ -33,15 +32,7 @@ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 # Clone the dotfiles repository
 echo_status "Cloning dotfiles repository..."
 if [ ! -d "$DOTFILES_DIR" ]; then
-    # Check if SSH authentication is working
-    if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
-        git clone "$REPO_SSH" "$DOTFILES_DIR"
-    else
-        echo_status "SSH authentication failed. Falling back to HTTPS..."
-        read -sp "Enter your GitHub Personal Access Token: " GITHUB_TOKEN
-        echo ""
-        git clone "https://$GITHUB_TOKEN@github.com/tordenist/letmecook.git" "$DOTFILES_DIR"
-    fi
+    git clone "$REPO_URL" "$DOTFILES_DIR"
 else
     echo_status "Repository already exists. Skipping clone."
 fi
