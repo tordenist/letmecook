@@ -29,6 +29,10 @@ fi
 mkdir -p ~/.config/nix
 echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 
+# Ensure correct nixbld UID migration (for macOS Sequoia 15+)
+echo_status "Migrating nixbld users to new UID range..."
+curl --proto '=https' --tlsv1.2 -sSf -L https://github.com/NixOS/nix/raw/master/scripts/sequoia-nixbld-user-migration.sh | bash -
+
 # Clone the dotfiles repository
 echo_status "Cloning dotfiles repository..."
 if [ ! -d "$DOTFILES_DIR" ]; then
