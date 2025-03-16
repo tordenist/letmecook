@@ -2,6 +2,9 @@
   # Enable nix
   nix.enable = true;
 
+  # Ensure compatibility with macOS Sequoia and future updates
+  ids.uids.nixbld = lib.mkIf (builtins.getEnv "CI" == "") 351;
+
   # Set macOS system preferences
   system.defaults.NSGlobalDomain.AppleShowAllExtensions = true; # Show file extensions
   system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false; # Disable press-and-hold for key repeats
@@ -33,9 +36,6 @@
 
   # Use Zsh as the default shell
   programs.zsh.enable = true;
-
-  # Ensure compatibility with macOS Sequoia and future updates
-  ids.uids.nixbld = 351;
 
   # State version
   system.stateVersion = 4;
