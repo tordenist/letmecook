@@ -12,7 +12,7 @@
       system = "aarch64-darwin";  # Change to x86_64-darwin for Intel Macs
       pkgs = import nixpkgs { inherit system; };
     in {
-      darwinConfigurations.my-mac = nix-darwin.lib.darwinSystem {
+      darwinConfigurations.obsidian-flake = nix-darwin.lib.darwinSystem {
         inherit system;
         modules = [
           ./darwin.nix

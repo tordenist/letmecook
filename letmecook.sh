@@ -5,6 +5,7 @@ set -o pipefail  # Catch errors in piped commands
 
 # Define paths
 DOTFILES_DIR="$HOME/grimorium/letmecook"
+NIX_DIR="$DOTFILES_DIR/nix"
 REPO_SSH="git@github.com:tordenist/letmecook.git"
 REPO_HTTPS="https://github.com/tordenist/letmecook.git"
 
@@ -40,16 +41,22 @@ if [ ! -d "$DOTFILES_DIR" ]; then
         echo_status "SSH authentication failed. Falling back to HTTPS..."
         read -sp "Enter your GitHub token: " GITHUB_TOKEN
         echo ""
-        git clone "https://\$GITHUB_TOKEN@github.com/tordenist/letmecook.git" "$DOTFILES_DIR"
+        git clone "https://$GITHUB_TOKEN@github.com/tordenist/letmecook.git" "$DOTFILES_DIR"
     fi
 else
     echo_status "Repository already exists. Skipping clone."
 fi
-cd "$DOTFILES_DIR"
+
+# Ensure we are in the correct directory for Nix-Darwin
+cd "$NIX_DIR"
+if [ ! -f "flake.nix" ]; then
+    echo -e "${YELLOW}[WARNING]${NC} flake.nix not found in $NIX_DIR. Aborting Nix-Darwin setup."
+    exit 1
+fi
 
 # Install nix-darwin configuration
 echo_status "Applying Nix-Darwin configuration..."
-nix run nix-darwin -- switch --flake .#my-mac
+nix run nix-darwin -- switch --flake "$NIX_DIR#obsidian-flake"
 
 # Apply dotfiles with Stow
 echo_status "Applying dotfiles with Stow..."

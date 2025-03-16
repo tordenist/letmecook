@@ -1,10 +1,6 @@
 { config, pkgs, ... }: {
-  # Enable nix-darwin system services
-  services.nix-daemon.enable = true;
-  nix.package = pkgs.nix;
-
-  # Set system hostname
-  networking.hostName = "obsidian-flake";
+  # Enable nix
+  nix.enable = true;
 
   # Set macOS system preferences
   system.defaults.NSGlobalDomain.AppleShowAllExtensions = true; # Show file extensions
