@@ -33,8 +33,11 @@ jobs:
           cd nix
           nix build ".#darwinConfigurations.obsidian-flake.system"
 
-      - name: Lint `letmecook.sh` script
-        run: shellcheck letmecook.sh
+      - name: Run ShellCheck on Scripts
+        uses: ludeeus/action-shellcheck@2.0.0
+        with:
+          severity: warning
+          check_together: true
 
       - name: Test `letmecook.sh` in a Safe Mode
         run: |
