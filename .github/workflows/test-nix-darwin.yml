@@ -17,7 +17,7 @@ jobs:
       - name: Cache Nix Store
         uses: actions/cache@v4
         with:
-          path: /nix
+          path: /nix/store  # Only cache store, avoid permission issues
           key: nix-${{ runner.os }}-${{ github.sha }}
           restore-keys: |
             nix-${{ runner.os }}-
@@ -34,7 +34,7 @@ jobs:
           nix profile install nixpkgs#nix
 
   check-flake:
-    needs: setup
+    needs: setup  # Ensures setup job runs first
     runs-on: macos-latest
     steps:
       - name: Checkout repository
