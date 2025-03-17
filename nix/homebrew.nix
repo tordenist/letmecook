@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   homebrew = {
-    enable = true
+    enable = true;
     onActivation.cleanup = "zap"; # Fully remove unused packages
     brews = [
       "act" "amass" "bat" "btop" "dnstwist" "eza" "feroxbuster" "fzf"
