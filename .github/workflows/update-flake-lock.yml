@@ -1,7 +1,8 @@
 name: Update Flake Lock
 
 on:
-  workflow_dispatch:  # Allow manual execution
+  pull_request:
+  workflow_dispatch: # Allow manual execution
 
 jobs:
   update-flake-lock:
