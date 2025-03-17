@@ -1,5 +1,5 @@
 --target=$HOME
---dir=stow
+--dir=$HOME/grimorium/letmecook/stow
 --verbose=2
 --restow
 --dotfiles
