@@ -56,13 +56,32 @@ jobs:
           darwin-rebuild switch --flake .#obsidian-flake
 
   ## ─────────────────────────────────────────────────────────────
-  ## ✅ TEST `letmecook.sh` INSTALLATION SCRIPT
+  ## ✅ TEST `letmecook.sh` INSTALLATION SCRIPT ON MACOS
   ## ─────────────────────────────────────────────────────────────
   test-letmecook:
     runs-on: macos-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Cache Nix Store
+        uses: actions/cache@v4
+        with:
+          path: /nix/store  # Only cache store, avoid permission issues
+          key: nix-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            nix-${{ runner.os }}-
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Verify Nix Installation
+        run: |
+          nix profile install nixpkgs#nix
+          nix-env --version || echo "Nix installation failed!"
 
       - name: Ensure Script is Executable
         run: chmod +x letmecook.sh
