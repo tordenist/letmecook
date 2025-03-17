@@ -5,14 +5,22 @@ on:
     branches:
       - main
   pull_request:
+  workflow_dispatch:  # Allow manual execution
 
 jobs:
-  test:
+  setup:
     runs-on: macos-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Cache Nix Store
+        uses: actions/cache@v4
+        with:
+          path: /nix
+          key: nix-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            nix-${{ runner.os }}-
 
       - name: Install Nix
         uses: cachix/install-nix-action@v27
@@ -23,12 +31,38 @@ jobs:
       - name: Verify Nix Installation
         run: nix --version
 
+  check-flake:
+    needs: setup
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Check Flake Configuration
         run: |
           cd nix
           nix flake check --show-trace
 
-      - name: Test `letmecook.sh` in a Safe Mode
+  build-darwin:
+    needs: check-flake
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build nix-darwin configuration (dry run)
+        run: |
+          cd nix
+          nix build ".#darwinConfigurations.obsidian-flake.system"
+
+  test-letmecook:
+    needs: build-darwin
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run `letmecook.sh` in Dry-Run Mode
         run: |
           chmod +x letmecook.sh
           ./letmecook.sh --dry-run || true
