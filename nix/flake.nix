@@ -24,8 +24,6 @@
               enable = true;  # Enable nix-homebrew management
               enableRosetta = true;  # Ensure Rosetta 2 support for x86_64 packages
               user = "calliop3";  # Set correct user for managing Homebrew
-              # Optional: Enable fully-declarative tap management
-              mutableTaps = false;
             };
           }
         ];
