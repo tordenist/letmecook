@@ -29,14 +29,21 @@ jobs:
             experimental-features = nix-command flakes
 
       - name: Verify Nix Installation
-        run: nix --version
+        run: |
+          . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+          nix --version
 
   check-flake:
-    needs: setup
+    needs: setup  # Ensures setup job runs first
     runs-on: macos-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Ensure Nix Is Available
+        run: |
+          . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+          nix --version
 
       - name: Check Flake Configuration
         run: |
@@ -55,8 +62,20 @@ jobs:
           cd nix
           nix build ".#darwinConfigurations.obsidian-flake.system"
 
-  test-letmecook:
+  apply-darwin:
     needs: build-darwin
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Apply nix-darwin configuration
+        run: |
+          cd nix
+          darwin-rebuild switch --flake .#obsidian-flake
+
+  test-letmecook:
+    needs: apply-darwin
     runs-on: macos-latest
     steps:
       - name: Checkout repository
