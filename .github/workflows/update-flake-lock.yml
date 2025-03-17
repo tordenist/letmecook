@@ -21,7 +21,7 @@ jobs:
       - name: Generate `flake.lock`
         run: |
           cd nix
-          nix flake lock --recreate-lock-file
+          nix flake update
 
       - name: Commit & Push `flake.lock`
         run: |
