@@ -2,9 +2,6 @@ name: Update Flake Lock
 
 on:
   workflow_dispatch:  # Allow manual execution
-  push:
-    branches:
-      - main
 
 jobs:
   update-flake-lock:
@@ -21,13 +18,15 @@ jobs:
           extra_nix_config: |
             experimental-features = nix-command flakes
 
-      - name: Update `flake.lock`
+      - name: Move to `nix/` directory & Update `flake.lock`
         run: |
+          cd nix
           nix flake update
           git status
 
       - name: Commit & Push Updated `flake.lock`
         run: |
+          cd nix
           if [[ -n $(git status --porcelain) ]]; then
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
