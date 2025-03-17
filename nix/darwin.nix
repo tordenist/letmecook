@@ -3,6 +3,9 @@
   nix.enable = true;
   nix.package = pkgs.nix;
 
+  # Set nix build user group ID to avoid UID mismatch errors
+  ids.gids.nixbld = 350;
+
   # Set macOS system preferences
   system.defaults.NSGlobalDomain.AppleShowAllExtensions = true; # Show file extensions
   system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false; # Disable press-and-hold for key repeats
