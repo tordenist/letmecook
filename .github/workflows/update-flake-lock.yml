@@ -22,18 +22,28 @@ jobs:
           extra_nix_config: |
             experimental-features = nix-command flakes
 
+      - name: Ensure Flake File Exists
+        run: |
+          if [ ! -f nix/flake.nix ]; then
+            echo "Error: flake.nix not found in nix/ directory!"
+            exit 1
+          fi
+
       - name: Check Current Flake Lock
         run: |
+          cd nix
           nix flake show --json > current-lock.json || true
 
       - name: Update Flake Lock
         run: |
+          cd nix
           nix flake update
 
       - name: Compare Changes
         id: check_diff
         run: |
-          if git diff --quiet nix/flake.lock; then
+          cd nix
+          if git diff --quiet flake.lock; then
             echo "No changes in flake.lock"
             echo "changed=false" >> $GITHUB_ENV
           else
@@ -44,4 +54,8 @@ jobs:
       - name: Commit and Push Updated Flake Lock
         if: env.changed == 'true'
         run: |
-          git config --global us
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add nix/flake.lock
+          git commit -m "Auto-update flake.lock"
+          git push
