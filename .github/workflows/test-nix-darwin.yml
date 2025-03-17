@@ -1,4 +1,4 @@
-name: Test Nix-Darwin & Install Script
+name: CI - Test Nix-Darwin & Install Script
 
 on:
   push:
@@ -8,7 +8,10 @@ on:
   workflow_dispatch:  # Allow manual execution
 
 jobs:
-  setup:
+  ## ─────────────────────────────────────────────────────────────
+  ## ✅ TEST NIX-DARWIN CONFIGURATION
+  ## ─────────────────────────────────────────────────────────────
+  test-nix-darwin:
     runs-on: macos-latest
     steps:
       - name: Checkout repository
@@ -30,58 +33,40 @@ jobs:
 
       - name: Verify Nix Installation
         run: |
+          nix profile install nixpkgs#nix
           nix-env --version || echo "Nix installation failed!"
-          nix profile install nixpkgs#nix
-
-  check-flake:
-    needs: setup  # Ensures setup job runs first
-    runs-on: macos-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Ensure Nix Is Available
-        run: |
-          nix-env --version || echo "Nix not found"
-          nix profile install nixpkgs#nix
 
       - name: Check Flake Configuration
         run: |
           cd nix
           nix flake check --show-trace
 
-  build-darwin:
-    needs: check-flake
-    runs-on: macos-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Build nix-darwin configuration (dry run)
         run: |
           cd nix
           nix build ".#darwinConfigurations.obsidian-flake.system"
 
-  apply-darwin:
-    needs: build-darwin
-    runs-on: macos-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Ensure `darwin-rebuild switch` is available
+        run: |
+          nix profile install nixpkgs#darwin-rebuild
 
       - name: Apply nix-darwin configuration
         run: |
           cd nix
           darwin-rebuild switch --flake .#obsidian-flake
 
+  ## ─────────────────────────────────────────────────────────────
+  ## ✅ TEST `letmecook.sh` INSTALLATION SCRIPT
+  ## ─────────────────────────────────────────────────────────────
   test-letmecook:
-    needs: apply-darwin
     runs-on: macos-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Ensure Script is Executable
+        run: chmod +x letmecook.sh
+
       - name: Run `letmecook.sh` in Dry-Run Mode
         run: |
-          chmod +x letmecook.sh
           ./letmecook.sh --dry-run || true
