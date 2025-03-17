@@ -1,0 +1,50 @@
+name: Update Flake Lock
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  update-flake-lock:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Check Current Flake Lock
+        run: |
+          nix flake show --json > current-lock.json || true
+
+      - name: Update Flake Lock
+        run: |
+          nix flake update
+
+      - name: Compare Changes
+        id: check_diff
+        run: |
+          if git diff --quiet nix/flake.lock; then
+            echo "No changes in flake.lock"
+            echo "changed=false" >> $GITHUB_ENV
+          else
+            echo "Flake lock has changed"
+            echo "changed=true" >> $GITHUB_ENV
+          fi
+
+      - name: Commit and Push Updated Flake Lock
+        if: env.changed == 'true'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add nix/flake.lock
+          git commit -m "Auto-update flake.lock"
+          git push
