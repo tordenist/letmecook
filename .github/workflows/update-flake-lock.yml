@@ -1,11 +1,10 @@
-name: Update Flake Lock
+name: Generate Flake Lock
 
 on:
-  pull_request:
-  workflow_dispatch:
+  workflow_dispatch: # Manual trigger only
 
 jobs:
-  update-flake-lock:
+  generate-flake-lock:
     runs-on: macos-latest
     steps:
       - name: Checkout repository
@@ -19,29 +18,19 @@ jobs:
           extra_nix_config: |
             experimental-features = nix-command flakes
 
-      - name: Move to `nix/` directory & Update `flake.lock`
+      - name: Generate `flake.lock`
         run: |
-          if [ -d "nix" ]; then
-            cd nix
-            nix flake update
-          else
-            echo "Error: 'nix/' directory not found!"
-            exit 1
-          fi
+          cd nix
+          nix flake lock --recreate-lock-file
 
-      - name: Debug Git status
-        run: |
-          git status
-          git remote -v
-
-      - name: Commit & Push Updated `flake.lock`
+      - name: Commit & Push `flake.lock`
         run: |
           cd nix
           if [[ -n $(git status --porcelain) ]]; then
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             git add flake.lock
-            git commit -m "ci: update flake.lock"
+            git commit -m "ci: generate fresh flake.lock"
             git push
           else
             echo "No changes to commit."
