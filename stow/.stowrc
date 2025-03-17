@@ -3,3 +3,4 @@
 --verbose=2
 --restow
 --dotfiles
+--no-folding
