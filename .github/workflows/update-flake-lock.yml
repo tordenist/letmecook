@@ -1,27 +1,19 @@
 name: Update Flake Lock
 
 on:
-  pull_request:
+  workflow_dispatch:  # Allow manual execution
+  push:
     branches:
       - main
-  workflow_dispatch:  # Allow manual execution
 
 jobs:
-  setup:
+  update-flake-lock:
     runs-on: macos-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Cache Nix Store
-        uses: actions/cache@v4
-        with:
-          path: /nix
-          key: nix-${{ runner.os }}-${{ github.sha }}
-          restore-keys: |
-            nix-${{ runner.os }}-
 
       - name: Install Nix
         uses: cachix/install-nix-action@v27
@@ -29,49 +21,19 @@ jobs:
           extra_nix_config: |
             experimental-features = nix-command flakes
 
-  update-flake-lock:
-    needs: setup
-    runs-on: macos-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Ensure Flake File Exists
+      - name: Update `flake.lock`
         run: |
-          if [ ! -f nix/flake.nix ]; then
-            echo "Error: flake.nix not found in nix/ directory!"
-            exit 1
-          fi
-
-      - name: Check Current Flake Lock
-        run: |
-          cd nix
-          nix flake show --json > current-lock.json || true
-
-      - name: Update Flake Lock
-        run: |
-          cd nix
           nix flake update
+          git status
 
-      - name: Compare Changes
-        id: check_diff
+      - name: Commit & Push Updated `flake.lock`
         run: |
-          cd nix
-          if git diff --quiet flake.lock; then
-            echo "No changes in flake.lock"
-            echo "changed=false" >> $GITHUB_ENV
+          if [[ -n $(git status --porcelain) ]]; then
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git add flake.lock
+            git commit -m "ci: update flake.lock"
+            git push
           else
-            echo "Flake lock has changed"
-            echo "changed=true" >> $GITHUB_ENV
+            echo "No changes to commit."
           fi
-
-      - name: Commit and Push Updated Flake Lock
-        if: env.changed == 'true'
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add nix/flake.lock
-          git commit -m "Auto-update flake.lock"
-          git push
