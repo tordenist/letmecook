@@ -66,7 +66,7 @@ nix run nix-darwin -- switch --flake "$DOTFILES_DIR/nix#obsidian-flake"
 
 # Apply dotfiles with Stow
 echo_status "Applying dotfiles with Stow..."
-cd "$DOTFILES_DIR"
+cd "$DOTFILES_DIR/stow"
 stow zsh
 stow .config
 
