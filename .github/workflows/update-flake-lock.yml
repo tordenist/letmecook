@@ -2,7 +2,7 @@ name: Update Flake Lock
 
 on:
   pull_request:
-  workflow_dispatch: # Allow manual execution
+  workflow_dispatch:
 
 jobs:
   update-flake-lock:
@@ -21,9 +21,18 @@ jobs:
 
       - name: Move to `nix/` directory & Update `flake.lock`
         run: |
-          cd nix
-          nix flake update
+          if [ -d "nix" ]; then
+            cd nix
+            nix flake update
+          else
+            echo "Error: 'nix/' directory not found!"
+            exit 1
+          fi
+
+      - name: Debug Git status
+        run: |
           git status
+          git remote -v
 
       - name: Commit & Push Updated `flake.lock`
         run: |
