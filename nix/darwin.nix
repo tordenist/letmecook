@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
-  # Enable nix-darwin system services
-  services.nix-daemon.enable = true;
+  # Enable nix
+  nix.enable = true;
   nix.package = pkgs.nix;
 
   # Set macOS system preferences
