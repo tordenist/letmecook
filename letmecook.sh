@@ -17,6 +17,12 @@ echo_status() {
     echo -e "${GREEN}[INFO]${NC} $1"
 }
 
+# Ensure grimorium directory exists
+if [ ! -d "$HOME/grimorium" ]; then
+    echo_status "Creating grimorium directory..."
+    mkdir -p "$HOME/grimorium"
+fi
+
 # Ensure Xcode Command Line Tools are installed
 echo_status "Checking for Xcode Command Line Tools..."
 xcode-select --install 2>/dev/null || echo_status "Xcode Command Line Tools already installed."
