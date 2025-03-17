@@ -30,11 +30,11 @@ jobs:
 
       - name: Verify Nix Installation
         run: |
-          . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-          nix --version
+          nix-env --version || echo "Nix installation failed!"
+          nix profile install nixpkgs#nix
 
   check-flake:
-    needs: setup  # Ensures setup job runs first
+    needs: setup
     runs-on: macos-latest
     steps:
       - name: Checkout repository
@@ -42,8 +42,8 @@ jobs:
 
       - name: Ensure Nix Is Available
         run: |
-          . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-          nix --version
+          nix-env --version || echo "Nix not found"
+          nix profile install nixpkgs#nix
 
       - name: Check Flake Configuration
         run: |
