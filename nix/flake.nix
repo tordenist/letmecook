@@ -15,22 +15,22 @@
       darwinConfigurations.obsidian-flake = nix-darwin.lib.darwinSystem {
         inherit system;
         modules = [
-          nix-homebrew.darwinModules.default  # Enable nix-homebrew
+          nix-homebrew.darwinModules.homebrew
           ./darwin.nix
           ./homebrew.nix
           ./packages.nix
         ];
 
+        # Configure nix-homebrew to manage Homebrew installation
         specialArgs = {
           homebrew = {
             enable = true;
+            user = calliop3;
             onActivation.autoUpdate = false;
             brewPrefix = "/opt/homebrew";
-            user = "calliop3";
             global = {
               autoUpdate = false;
             };
-            rosetta = true;
           };
         };
       };
