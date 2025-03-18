@@ -24,13 +24,19 @@ if [ ! -d "$HOME/grimorium" ]; then
 fi
 
 # Ensure Xcode Command Line Tools are installed
-echo_status "Checking for Xcode Command Line Tools..."
-xcode-select --install 2>/dev/null || echo_status "Xcode Command Line Tools already installed."
+if ! xcode-select -p &>/dev/null; then
+    echo_status "Installing Xcode Command Line Tools..."
+    xcode-select --install
+else
+    echo_status "Xcode Command Line Tools already installed."
+fi
 
 # Install Nix & Enable Flakes
 echo_status "Installing Nix and enabling Flakes..."
 if ! command -v nix &> /dev/null; then
-    bash -c "$(curl -L https://nixos.org/nix/install) --daemon"
+    bash -c "$(curl -fsSL https://nixos.org/nix/install)" --daemon
+    echo_status "Nix installation complete! Reloading shell..."
+    exec $SHELL -l  # Reload the shell to apply Nix changes
 fi
 mkdir -p ~/.config/nix
 echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
@@ -64,11 +70,19 @@ fi
 echo_status "Applying Nix-Darwin configuration..."
 nix run nix-darwin -- switch --flake "$DOTFILES_DIR/nix#obsidian-flake"
 
+# Reload shell to apply Nix-Darwin changes
+echo_status "Reloading shell after Nix-Darwin installation..."
+exec $SHELL -l  # Reload the shell
+
 # Apply dotfiles with Stow
 echo_status "Applying dotfiles with Stow..."
 cd "$DOTFILES_DIR/stow"
-stow zsh
-stow .config
+stow -v -t ~ zsh
+stow -v -t ~/.config .config  # Keeping your `.config` naming
+
+# Reload shell to apply new dotfiles
+echo_status "Reloading shell to apply new dotfiles..."
+exec $SHELL -l  # Reload the shell again
 
 # Final message
-echo_status "Installation complete! Restart your terminal to apply all changes."
+echo_status "Installation complete! Your terminal is now using the updated configuration."

@@ -3,11 +3,11 @@
     enable = true;
     onActivation.cleanup = "zap"; # Fully remove unused packages
     brews = [
-      "act" "amass" "bat" "btop" "dnstwist" "eza" "feroxbuster" "fzf"
+      "act" "amass" "antidote" "bat" "btop" "dnstwist" "eza" "feroxbuster" "fzf"
       "gh" "git" "glow" "hey" "httpie" "john-jumbo" "jq" "lazygit"
       "lefthook" "libpcap" "masscan" "mise" "mtr" "neofetch" "neovim"
       "nmap" "pre-commit" "procs" "ripgrep" "ruff" "scorecard" "shellcheck"
-      "sops" "starship" "stow" "theharvester" "tldr" "tmux" "tree" "yq"
+      "sops" "starship" "stow" "thefuck" "theharvester" "tldr" "tmux" "tree" "yq"
       "zoxide"
     ];
     casks = [
