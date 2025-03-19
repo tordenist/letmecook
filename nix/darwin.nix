@@ -7,9 +7,9 @@
   ids.gids.nixbld = 350;
 
   # Set specific wallpaper
-  system.activationScripts.setWallpaper.text = ''
-  osascript -e 'tell application "Finder" to set desktop picture to POSIX file "$HOME/grimorium/letmecook/wallpaper/muses.jpeg"'
-'';
+  #  system.activationScripts.setWallpaper.text = ''
+  #osascript -e 'tell application "Finder" to set desktop picture to POSIX file "$HOME/grimorium/letmecook/wallpaper/muses.jpeg"'
+  #'';
 
   # Set macOS system preferences
   system.defaults = {
@@ -46,7 +46,6 @@
 
     dock = {
       autohide = true;  # Automatically hide the dock
-      static-only = true;  # Only show pinned apps
       persistent-apps = [
         "/Applications/Ghostty.app"
         "/Applications/Spotify.app"
