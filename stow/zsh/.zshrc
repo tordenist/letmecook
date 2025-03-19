@@ -36,7 +36,7 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Load Aliases
-[ -f ~/.zsh_aliases ] && source ~/.zsh_aliases
+[ -f ~/.zshrc_aliases ] && source ~/.zshrc_aliases
 
 # Base exports
 export ZSH="$HOME"
@@ -44,6 +44,7 @@ export ZSH=$(antidote path ohmyzsh/ohmyzsh)
 
 # Use mise for version management
 export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$GOPATH/bin:/opt/homebrew/opt/openjdk/bin:/usr/bin/local/bin:$PATH"
+export MISE_TRUSTED_CONFIG_PATHS="$HOME/.config/mise/config.toml:$HOME/grimorium/letmecook/stow/.config/mise/config.toml"
 eval "$(mise activate zsh)"
 eval "$(mise completion zsh)"
 
