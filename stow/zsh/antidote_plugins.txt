@@ -29,9 +29,6 @@ ohmyzsh/ohmyzsh path:plugins/ruby
 ohmyzsh/ohmyzsh path:plugins/rust
 ohmyzsh/ohmyzsh path:plugins/node
 ohmyzsh/ohmyzsh path:plugins/terraform
-ohmyzsh/ohmyzsh path:plugins/bash
-ohmyzsh/ohmyzsh path:plugins/zig
-ohmyzsh/ohmyzsh path:plugins/nim
 
 # misc plugins
 Aloxaf/fzf-tab
