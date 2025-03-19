@@ -8,11 +8,13 @@
 - **Declarative System Management** with [`nix-darwin`](https://github.com/LnL7/nix-darwin)
 - **Package Management via Homebrew** (managed in `nix/homebrew.nix`)
 - **Dotfile Management** using [`stow`](https://www.gnu.org/software/stow/)
+- **Automated Setup Script** with modular installation options
 - **Customized macOS Settings**, including:
   - Dark mode enabled by default
   - Key repeat speed set to `2`
-  - Auto-hiding Dock with predefined pinned apps (Ghostty, Spotify, Postman)
+  - Auto-hiding Dock with predefined pinned apps (Ghostty, Obsidian, Postman, etc)
   - Custom wallpaper set from `wallpaper/muses.jpeg`
+  - More stuff but I don't feel like listing them all, fight me
 
 ---
 
@@ -36,7 +38,7 @@ letmecook/
 │── brew-packages/   # Homebrew bundle management
 │   ├── Brewfile
 │
-│── letmecook.sh     # Automated setup script
+│── letmecook.sh     # Automated modular setup script
 │
 │── README.md        # Documentation
 ```
@@ -50,24 +52,36 @@ letmecook/
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/tordenist/letmecook/main/letmecook.sh)"
 ```
 
-This script will:
-- Install **Xcode Command Line Tools** (if missing)
-- Install **Nix** and enable **Flakes**
-- Clone the **letmecook** repository (via SSH or HTTPS with GitHub Token)
-- Apply **nix-darwin** system configuration
-- Apply **dotfiles with Stow**
+This script supports modular installation with the following options:
+
+| Option               | Description                                        |
+|----------------------|----------------------------------------------------|
+| `--install-base`     | Installs Xcode Command Line Tools, Nix, and clones the repo |
+| `--install-dotfiles` | Applies dotfiles using Stow                        |
+| `--reload-nix`       | Reloads Nix and applies Nix-Darwin configuration  |
+| `--set-wallpaper`    | Sets the wallpaper to `wallpaper/muses.jpeg`      |
+
+For example, to only install dotfiles:
+```sh
+bash letmecook.sh --install-dotfiles
+```
+
+To apply everything in sequence:
+```sh
+bash letmecook.sh --install-base --install-dotfiles --reload-nix --set-wallpaper
+```
 
 ---
 
 ## 📌 Updating
 
-To update the system, run:
+### **Update the Nix System Configuration**
 ```sh
 nix flake update
 nix run nix-darwin -- switch --flake .#my-mac
 ```
 
-To sync dotfiles:
+### **Resync Dotfiles with Stow**
 ```sh
 stow --restow *
 ```
@@ -77,16 +91,16 @@ stow --restow *
 ## 🔥 Credits & Inspirations
 - [`nix-darwin`](https://github.com/LnL7/nix-darwin)
 - [`dreamsofautonomy/nix-darwin`](https://github.com/dreamsofautonomy/nix-darwin)
-- [`yadm`](https://github.com/TheLocehiliosan/yadm) (for inspiration on dotfile management)
 
 ---
 
 ## 🎯 Future Improvements
 - Integrate additional macOS tweaks
-- Automate setup with a bootstrap script
 - Improve Nix package management with overlays
 
 ---
 
 ## 💡 License
 MIT License © tordenist 2025
+
+
