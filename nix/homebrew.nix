@@ -7,7 +7,7 @@
       "gh" "git" "glow" "grype" "hey" "httpie" "john-jumbo" "jq" "lazygit"
       "lefthook" "libpcap" "masscan" "mise" "mtr" "neofetch" "neovim"
       "nmap" "pre-commit" "procs" "ripgrep" "ruff" "scorecard" "shellcheck"
-      "sops" "starship" "stow" "syft" "thefuck" "theharvester" "tldr" "tmux" "tree" "yq"
+      "sops" "starship" "stow" "syft" "thefuck" "theharvester" "tldr" "tmux" "tpm" "tree" "yq"
       "zoxide"
     ];
     casks = [
