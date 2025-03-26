@@ -77,6 +77,18 @@ install_dotfiles() {
 
     echo_status "Mise packages were installed successfully!"
 
+    echo_status "Creating TMUX conf symlink"
+
+    # Remove existing file or symlink if it exists
+    if [ -e ~/.tmux.conf ] || [ -L ~/.tmux.conf ]; then
+        rm ~/.tmux.conf
+    fi
+
+    # Create the symlink
+    ln -s "$DOTFILES_DIR/stow/.config/tmux/tmux.conf" ~/.tmux.conf
+
+    echo_status "TMUX conf was successfully linked!"
+
     cd "$DOTFILES_DIR"
 
     exec $SHELL -l # Reload shell to apply changes
